@@ -94,8 +94,39 @@ The `RATE_SHEET_DAILY` view includes your account's negotiated ACV-based discoun
 ```
 ├── SKILL.md              # The skill definition (loaded by Cortex Code)
 ├── skill_evidence.yaml   # Metadata for skill validation
+├── streamlit-app/        # Deployable Streamlit-in-Snowflake app
+│   ├── ai_spend_tracker_app.py   # Main app (6 tabs: Overview, By Model, By Warehouse, Agents, REST API, Ask AI)
+│   ├── setup.sql                 # One-click deployment SQL
+│   └── modules/
+│       ├── __init__.py
+│       └── styles.py             # Snowflake Design System (CSS tokens, metric cards, helpers)
 └── README.md             # This file
 ```
+
+## Deploy the Streamlit App
+
+The `streamlit-app/` directory contains a ready-to-deploy Streamlit-in-Snowflake dashboard with:
+
+- **Overview** — daily trend, spend by function, AI-generated cost recommendations
+- **By Model** — cost per model, token breakdown (input vs output), model selection guide
+- **By Warehouse** — AI spend by warehouse, chargeback by QUERY_TAG
+- **Agents** — Cortex Agent sessions and token credits
+- **REST API & CoCo** — REST API tokens, Cortex Code session tracking
+- **Ask AI** — free-form natural-language Q&A powered by CORTEX.COMPLETE
+
+### Quick deploy
+
+```sql
+-- 1. Run the setup script
+-- See streamlit-app/setup.sql for full instructions
+
+-- 2. Upload files via SnowSQL:
+PUT file://streamlit-app/ai_spend_tracker_app.py @AI_SPEND_TRACKER_STAGE/ AUTO_COMPRESS=FALSE OVERWRITE=TRUE;
+PUT file://streamlit-app/modules/styles.py @AI_SPEND_TRACKER_STAGE/modules/ AUTO_COMPRESS=FALSE OVERWRITE=TRUE;
+PUT file://streamlit-app/modules/__init__.py @AI_SPEND_TRACKER_STAGE/modules/ AUTO_COMPRESS=FALSE OVERWRITE=TRUE;
+```
+
+Or use Cortex Code: just invoke the skill with "Create a Streamlit dashboard for AI cost tracking" and it will deploy automatically.
 
 ## Related Resources
 
