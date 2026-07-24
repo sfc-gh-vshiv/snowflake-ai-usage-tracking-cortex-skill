@@ -1,0 +1,38 @@
+skill_name: track-cortex-ai-spend
+skill_type: customer-facing
+promotion_stage: draft
+version: 1.0.0
+authors:
+- sfc-gh-vshiv
+submitter: Vinod S
+validation:
+  testers:
+    count: 0
+    names: []
+customer_impact:
+  customers:
+    count: 0
+    names: []
+evidence_links: []
+notes: 'Addresses a confirmed customer need (TAM-1010, Ericsson AI/Storage Chargeback):
+
+  customers with rapid AI adoption needing automated spend attribution.
+
+  Uses live SNOWFLAKE.ACCOUNT_USAGE.CORTEX_*_USAGE_HISTORY views validated against
+
+  SNOWHOUSE account. SQL examples tested against real data.
+
+  '
+overlap_check:
+  max_score: 0.6228
+  highest_match: account-360
+  highest_match_source: local
+  method: local-embedding
+  checked_against_count: 138
+  checked_at: '2026-07-24T17:47:54Z'
+  highest_match_description: '**[REQUIRED]** for ANY question about a Snowflake customer
+    account. Use when user asks about: account health, credit usage, consumption trends,
+    support cases, opportunities, contracts, workloads, tool'
+  highest_match_submitter: vshiv
+  highest_match_testers:
+  - vshiv
