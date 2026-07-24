@@ -121,13 +121,12 @@ st.session_state["ask_context"] = (
 # ============================================================
 # TABS
 # ============================================================
-tab1, tab2, tab3, tab4, tab5, tab_ask = st.tabs([
+tab1, tab2, tab3, tab4, tab5 = st.tabs([
     "Overview",
     "By Model",
     "By Warehouse",
     "Agents",
     "REST API & CoCo",
-    "Ask AI",
 ])
 
 # ============================================================
@@ -364,54 +363,6 @@ with tab5:
             except Exception:
                 pass
 
-# ============================================================
-# TAB 6: ASK AI
-# ============================================================
-with tab_ask:
-    st.markdown(section_header("ASK AI ABOUT YOUR SPEND"), unsafe_allow_html=True)
-    st.caption("Ask any question about your Cortex AI spend, model selection, or cost optimization.")
-
-    # Chat input
-    user_q = st.text_input(
-        "Your question",
-        value="",
-        key="ask_text_input",
-        placeholder="e.g. Which model is cheapest for my workload?",
-    )
-
-    if st.button("Ask", key="ask_submit", type="primary"):
-        if user_q.strip():
-            context = st.session_state.get("ask_context", "No context.")
-            prompt = f"""You are a Snowflake AI FinOps advisor. Answer the user's question about their Cortex AI spend.
-Be specific, actionable, and concise. Use markdown formatting.
-
-User's AI Spend Context:
-{context}
-
-Question: {user_q}
-
-Answer:"""
-            with st.spinner("Thinking..."):
-                try:
-                    result = session.sql(f"""SELECT SNOWFLAKE.CORTEX.COMPLETE('claude-sonnet-4-5', $${prompt}$$)""").collect()
-                    answer = result[0][0]
-                except Exception as e:
-                    answer = f"Error: {str(e)[:200]}"
-
-            st.markdown("### Answer")
-            st.markdown(answer)
-
-            if "ask_history" not in st.session_state:
-                st.session_state.ask_history = []
-            st.session_state.ask_history.append({"q": user_q, "a": answer})
-
-    # History
-    if st.session_state.get("ask_history"):
-        st.markdown("---")
-        st.markdown("**Recent questions:**")
-        for item in reversed(st.session_state.get("ask_history", [])[-5:]):
-            with st.expander(f"Q: {item['q'][:80]}"):
-                st.markdown(item["a"])
 
 # ============================================================
 # FOOTER
