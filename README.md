@@ -135,9 +135,6 @@ Or use Cortex Code: just invoke the skill with "Create a Streamlit dashboard for
 - [CORTEX_AGENT_USAGE_HISTORY](https://docs.snowflake.com/en/sql-reference/account-usage/cortex_agent_usage_history)
 - [RATE_SHEET_DAILY](https://docs.snowflake.com/en/sql-reference/organization-usage/rate_sheet_daily)
 
-## Contributing
-
-This skill is also submitted to the [Snowflake-Solutions/cortex-code-skills](https://github.com/Snowflake-Solutions/cortex-code-skills) community repo as PR #367.
 
 ## License
 
